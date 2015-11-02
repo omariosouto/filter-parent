@@ -78,6 +78,6 @@ class SKN_page_filter {
 
 }//End SKN_page_filter
 
-if(isset($_GET['post_type'])){
+if(is_post_type_hierarchical($_GET['post_type']) && isset($_GET['post_type'])){
     $skn_page_filter = new SKN_page_filter();
 }
