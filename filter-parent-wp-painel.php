@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Filter Parent WP Painel
-Plugin URI: #
+Plugin URI: https://github.com/MarioSkynex/Filter-Parent/
 Description: Filter parent is a plugin that filter 'post-types' in wp-admin by their parent.
 Version: 1.0
 Author: Mario Skynex
