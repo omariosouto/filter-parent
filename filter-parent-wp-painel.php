@@ -10,20 +10,26 @@ License: GPL2
 */
 
 
-class SKN_page_filter {
-//Methods
-    public function __construct(){
-        add_action('restrict_manage_posts',array($this, 'filter_parent'));
-        add_filter('parse_query',array($this,'query_filter_parent'));
+class SKN_page_filter
+{
+	//Methods
+    public function __construct()
+    {
+        add_action('restrict_manage_posts', array($this, 'filter_parent'));
+        add_filter('parse_query', array($this, 'query_filter_parent'));
     }
 
-    public function filter_parent(){ //Class that filter the parent post-type
-
-		 global $pagenow;//Global variable that get the current WordPress wp-admin Page.
+    //Method that filter the parent post-type
+    public function filter_parent()
+    { 
+		//Global variable that get the current WordPress wp-admin Page.
+		global $pagenow;
 
         //Verify if the page is 'edit.php' and if you are on a post_type page
-	    if ($pagenow=='edit.php' && isset($_GET['post_type'])) {
-	        if (isset($_GET['motherPostID'])) {
+	    if ($pagenow == 'edit.php' && isset($_GET['post_type']))
+	    {
+	        if (isset($_GET['motherPostID'])) 
+	        {
 		        $dropdown_options = array(
 		            'depth' => 2,
 		            'hierarchical' => 1,
@@ -33,7 +39,9 @@ class SKN_page_filter {
 		            'show_option_none' => __( ' Filtro Todos ' ),
 		            'sort_column' => 'name',
 		        );
-	        } else {
+	        } 
+	        else 
+	        {
 		        $dropdown_options = array(
 		            'depth' => 2,
 		            'hierarchical' => 1,
@@ -49,17 +57,18 @@ class SKN_page_filter {
     } //End filter_parent
 
     //Query that filter the post-type
-    public function query_filter_parent($query) {
-
-        if (isset($_GET['motherPostID'])) {
+    public function query_filter_parent($query)
+    {
+        if (isset($_GET['motherPostID']))
+        {
 	        global $pagenow;
 
 	        $childPostType = get_pages(
-	            array(
-	                'child_of' => $_GET['motherPostID'],
-	                'post_status' => array('publish','draft','trash')
-	                )
-	             );
+	        					array(
+					                'child_of' => $_GET['motherPostID'],
+					                'post_status' => array('publish','draft','trash')
+				               	)
+	        				 );
 
 	        $filteredPostTypes = array($_GET['motherPostID']);
 
@@ -68,7 +77,8 @@ class SKN_page_filter {
 	        }
 
 	        $queryVars = &$query->query_vars;
-	        if ($pagenow=='edit.php' && isset($_GET['post_type'])) {
+	        if ($pagenow == 'edit.php' && isset($_GET['post_type']))
+	        {
 	            $queryVars['post__in'] = $filteredPostTypes;
 	        }
 
